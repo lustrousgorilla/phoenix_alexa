@@ -5,12 +5,13 @@ defmodule PhoenixAlexa.ValidateApplicationId do
 
   def call(conn, applicationId) do
     case conn.body_params["session"]["application"]["applicationId"] do
-      ^applicationId  -> 
+      ^applicationId ->
         conn
+
       _ ->
         conn
-          |> Plug.Conn.send_resp(400, ~s({"error": "Invalid application"}))
-          |> halt        
+        |> Plug.Conn.send_resp(400, ~s({"error": "Invalid application"}))
+        |> halt
     end
-  end  
+  end
 end

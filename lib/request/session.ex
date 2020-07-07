@@ -1,5 +1,4 @@
 defmodule PhoenixAlexa.Session do
-  
   alias PhoenixAlexa.{Application, User}
 
   defstruct new: false,

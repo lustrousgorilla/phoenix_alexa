@@ -4,13 +4,15 @@ defmodule PhoenixAlexa.Mixfile do
   @version File.read!("VERSION") |> String.trim()
 
   def project do
-    [app: :phoenix_alexa,
-     version: @version,
-     elixir: "~> 1.2",
-     description: "Alexa library for Phoenix",
-     deps: deps(),
-     package: package(),
-     consolidate_protocols: Mix.env() != :test]
+    [
+      app: :phoenix_alexa,
+      version: @version,
+      elixir: "~> 1.2",
+      description: "Alexa library for Phoenix",
+      deps: deps(),
+      package: package(),
+      consolidate_protocols: Mix.env() != :test
+    ]
   end
 
   def application do
@@ -25,9 +27,11 @@ defmodule PhoenixAlexa.Mixfile do
   end
 
   defp package do
-    [files: ~w(lib test mix.exs README.md LICENSE VERSION),
-     maintainers: ["Gabi Zuniga"],
-     licenses: ["MIT"],
-     links: %{"GitHub" => "https://github.com/gabiz/phoenix_alexa"}]
+    [
+      files: ~w(lib test mix.exs README.md LICENSE VERSION),
+      maintainers: ["Gabi Zuniga"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/gabiz/phoenix_alexa"}
+    ]
   end
 end

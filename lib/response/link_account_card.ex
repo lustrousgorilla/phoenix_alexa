@@ -8,7 +8,8 @@ defmodule PhoenixAlexa.LinkAccountCard do
   def set_title(card, title) do
     %LinkAccountCard{card | title: title}
   end
+
   def set_content(card, content) do
-    %LinkAccountCard{card | content: content} 
+    %LinkAccountCard{card | content: content}
   end
 end

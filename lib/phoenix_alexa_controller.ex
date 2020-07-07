@@ -11,34 +11,38 @@ defmodule PhoenixAlexa.Controller do
 
       def set_response(conn, status \\ 200, response) do
         conn
-          |> Plug.Conn.put_resp_content_type("application/json")
-          |> Plug.Conn.resp(status, Poison.encode!(response))
+        |> Plug.Conn.put_resp_content_type("application/json")
+        |> Plug.Conn.resp(status, Poison.encode!(response))
       end
 
       def handle_request(conn, request) do
         case request.request.type do
           "LaunchRequest" ->
             launch_request(conn, request)
+
           "IntentRequest" ->
             intent_request(conn, request.request.intent.name, request)
+
           "CanFulfillIntentRequest" ->
             can_fulfill_intent_request(conn, request.request.intent.name, request.request.intent.slots, request)
+
           "SessionEndedRequest" ->
             session_ended_request(conn, request)
-              |> set_response(%{})
+            |> set_response(%{})
         end
-          |> Plug.Conn.send_resp()
+        |> Plug.Conn.send_resp()
       end
 
       def unquote(method)(conn, params) do
         case Poison.Decode.decode(params, as: %PhoenixAlexa.Request{}) do
-          %PhoenixAlexa.Request{} = request -> handle_request(conn, request)
+          %PhoenixAlexa.Request{} = request ->
+            handle_request(conn, request)
+
           _ ->
             conn
-              |> Plug.Conn.put_resp_content_type("application/json")
-              |> Plug.Conn.send_resp(500, Poison.encode!(%{error: "Internal Error"}))
+            |> Plug.Conn.put_resp_content_type("application/json")
+            |> Plug.Conn.send_resp(500, Poison.encode!(%{error: "Internal Error"}))
         end
-
       end
 
       def launch_request(conn, _request) do
@@ -57,10 +61,7 @@ defmodule PhoenixAlexa.Controller do
         conn |> set_response(%Response{})
       end
 
-      defoverridable [launch_request: 2, intent_request: 3, can_fulfill_intent_request: 3,
-                      session_ended_request: 2]
-
+      defoverridable launch_request: 2, intent_request: 3, can_fulfill_intent_request: 3, session_ended_request: 2
     end
   end
-
 end
